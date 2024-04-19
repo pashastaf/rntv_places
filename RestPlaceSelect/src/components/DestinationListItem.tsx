@@ -4,7 +4,7 @@ import EditScreenInfo from '@/src/components/EditScreenInfo';
 import { Text, View } from '@/src/components/Themed';
 import products from '@/assets/data/products';
 import { Product } from '../types';
-import { Link } from 'expo-router';
+import { Link, useSegments } from 'expo-router';
 
 export const DefaultImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png' 
 
@@ -12,9 +12,12 @@ type DestinationListItemProps = {
     product: Product;
 }
 
+
 const DestinationListItem = ({ product }: DestinationListItemProps) => {
+  const segments = useSegments();
+
   return (
-  <Link href={(`/destination/${product.id}`)} asChild>
+  <Link href={(`/${segments[0]}/destination/${product.id}`)} asChild>
     <Pressable style={styles.container}>
       <Image 
         style={styles.image} 
