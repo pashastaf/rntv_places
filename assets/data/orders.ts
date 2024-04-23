@@ -1,5 +1,5 @@
 import { Order } from '@/src/types';
-import products from './products';
+import destinations from './destiantions';
 import dayjs from 'dayjs';
 
 const now = dayjs();
@@ -9,7 +9,7 @@ const orders: Order[] = [
     id: 23123,
     created_at: now.subtract(1, 'hour').toISOString(),
     total: 31.4,
-    status: 'Cooking',
+    status: 'New',
     user_id: '1',
     order_items: [
       {
@@ -17,16 +17,16 @@ const orders: Order[] = [
         order_id: 23123,
         size: 'M',
         quantity: 2,
-        product_id: products[0].id,
-        products: products[0],
+        destination_id: destinations[0].id,
+        destination: destinations[0],
       },
       {
         id: 2,
         order_id: 23123,
         size: 'L',
         quantity: 1,
-        product_id: products[1].id,
-        products: products[1],
+        destination_id: destinations[1].id,
+        destination: destinations[1],
       },
     ],
   },
@@ -34,7 +34,7 @@ const orders: Order[] = [
     id: 32145,
     created_at: now.subtract(3, 'days').toISOString(),
     total: 11.4,
-    status: 'Delivered',
+    status: 'Complete',
     user_id: '1',
     order_items: [
       {
@@ -42,8 +42,8 @@ const orders: Order[] = [
         order_id: 32145,
         size: 'M',
         quantity: 2,
-        product_id: products[3].id,
-        products: products[3],
+        destination_id: destinations[3].id,
+        destination: destinations[3],
       },
     ],
   },
@@ -51,7 +51,7 @@ const orders: Order[] = [
     id: 23445,
     created_at: now.subtract(3, 'weeks').toISOString(),
     total: 11.4,
-    status: 'Delivered',
+    status: 'In work',
     user_id: '1',
     order_items: [
       {
@@ -59,24 +59,24 @@ const orders: Order[] = [
         order_id: 23445,
         size: 'M',
         quantity: 1,
-        product_id: products[3].id,
-        products: products[3],
+        destination_id: destinations[3].id,
+        destination: destinations[3],
       },
       {
         id: 2,
         order_id: 23445,
         size: 'M',
         quantity: 1,
-        product_id: products[7].id,
-        products: products[7],
+        destination_id: destinations[7].id,
+        destination: destinations[7],
       },
       {
         id: 3,
         order_id: 23445,
         size: 'L',
         quantity: 1,
-        product_id: products[8].id,
-        products: products[8],
+        destination_id: destinations[8].id,
+        destination: destinations[8],
       },
     ],
   },

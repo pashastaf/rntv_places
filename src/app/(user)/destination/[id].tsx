@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Text , Image, StyleSheet, Pressable} from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
-import products from '@/assets/data/products';
 import { DefaultImage } from '@/src/components/DestinationListItem';
+import destinations from '@/assets/data/destiantions';
 
 const sizes = ['S','M','L','XL']
 
@@ -12,18 +12,18 @@ const DestinationDetailScreen = () => {
 
   const [selectedSize, setSelectedSize] = useState('M');
 
-  const product = products.find((p) => p.id.toString() === id);
+  const destination = destinations.find((p) => p.id.toString() === id);
 
-  if (!product) {
-    return <Text> Product not found</Text>
+  if (!destination) {
+    return <Text> destination not found</Text>
   }
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: product.name }} />
+      <Stack.Screen options={{ title: destination.name }} />
       <Image 
         style={styles.image} 
-        source={{ uri: product.image || DefaultImage }} 
+        source={{ uri: DefaultImage }} 
         resizeMode='contain'
         />
       <Text> Select size </Text>
@@ -48,7 +48,7 @@ const DestinationDetailScreen = () => {
         </Pressable>
         ))}
       </View>
-      <Text style={styles.price}> ${product.price} </Text>
+      <Text style={styles.country}> {destination.country} </Text>
     </View>
   );
 };
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1
   },
-  price: {
+  country: {
     fontSize: 18,
     fontWeight: "bold"
   },

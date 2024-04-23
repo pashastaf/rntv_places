@@ -3,11 +3,12 @@ import React from 'react';
 import Button from '@/src/components/Button';
 import { Link } from 'expo-router';
 
+
 const index = () => {
   return (
-    <Link href={'/sign-in'} asChild>
-      <Button text="Sign in" />
-    </Link>
+      <Link href={'/sign-in'} asChild>
+        <Button text="Sign in" />
+      </Link>
   );
 };
 

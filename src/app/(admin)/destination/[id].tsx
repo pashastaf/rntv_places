@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { View, Text , Image, StyleSheet, Pressable} from 'react-native';
 import { useLocalSearchParams, Stack, Link } from 'expo-router';
 import products from '@/assets/data/products';
+import destinations from '@/assets/data/destiantions';
 import { DefaultImage } from '@/src/components/DestinationListItem';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/src/constants/Colors';
@@ -14,9 +15,9 @@ const DestinationDetailScreen = () => {
 
   const [selectedSize, setSelectedSize] = useState('M');
 
-  const product = products.find((p) => p.id.toString() === id);
+  const destination = destinations.find((d) => d.id.toString() === id);
 
-  if (!product) {
+  if (!destination) {
     return <Text> Product not found</Text>
   }
 
@@ -43,13 +44,13 @@ const DestinationDetailScreen = () => {
                 ),
             }}/>   
             
-      <Stack.Screen options={{ title: product.name }} />
+      <Stack.Screen options={{ title: destination.name }} />
       <Image 
         style={styles.image} 
-        source={{ uri: product.image || DefaultImage }} 
+        source={{ uri:DefaultImage }} 
         resizeMode='contain'
         />
-      <Text style={styles.price}> ${product.price} </Text>
+      <Text style={styles.contry}> {destination.country} </Text>
     </View>
   );
 };
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1
   },
-  price: {
+  contry: {
     fontSize: 18,
     fontWeight: "bold"
   }

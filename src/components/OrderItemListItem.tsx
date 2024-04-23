@@ -12,14 +12,14 @@ const OrderItemListItem = ({ item }: OrderItemListItemProps) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{ uri: item.products.image || DefaultImage }}
+        source={{ uri: DefaultImage }}
         style={styles.image}
         resizeMode="contain"
       />
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>{item.products.name}</Text>
+        <Text style={styles.title}>{item.destination.name}</Text>
         <View style={styles.subtitleContainer}>
-          <Text style={styles.price}>${item.products.price.toFixed(2)}</Text>
+          <Text style={styles.country}>${item.destination.country}</Text>
           <Text>Size: {item.size}</Text>
         </View>
       </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 18,
   },
-  price: {
+  country: {
     color: Colors.light.tint,
     fontWeight: 'bold',
   },

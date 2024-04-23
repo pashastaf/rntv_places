@@ -1,28 +1,26 @@
-export type Product = {
+export type Destination = {
     id: number;
-    image: string | null;
     name: string;
-    price: number;
+    country: string;
   };
   
   export type PizzaSize = 'S' | 'M' | 'L' | 'XL';
   
   export type CartItem = {
     id: string;
-    product: Product;
-    product_id: number;
+    destination: Destination;
+    destination_id: number;
     size: PizzaSize;
     quantity: number;
   };
   
   export const OrderStatusList: OrderStatus[] = [
     'New',
-    'Cooking',
-    'Delivering',
-    'Delivered',
+    'In work',
+    'Complete',
   ];
   
-  export type OrderStatus = 'New' | 'Cooking' | 'Delivering' | 'Delivered';
+  export type OrderStatus = 'New' | 'In work' | 'Complete';
   
   export type Order = {
     id: number;
@@ -36,8 +34,8 @@ export type Product = {
   
   export type OrderItem = {
     id: number;
-    product_id: number;
-    products: Product;
+    destination_id: number;
+    destination: Destination;
     order_id: number;
     size: PizzaSize;
     quantity: number;

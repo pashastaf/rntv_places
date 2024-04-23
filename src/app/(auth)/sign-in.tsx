@@ -12,16 +12,6 @@ const SignInScreen = () => {
   const [client, setClient] = useState(false);
   const pathArr = ['(admin)/destination', '(user)/destination'];
   
-  // const { id } = useLocalSearchParams();
-  // const user = users.find((p) => p.id.toString() === id);
-
-  
-
-  // const userCheck = () => {
-  //   if(login == user?.login && user.position == 1) {
-
-  //   }
-  // };
 
   function userCheck(login: string, password: string): number{
     let flag = 0;

@@ -2,32 +2,32 @@ import { StyleSheet, Image, Pressable } from 'react-native';
 
 import EditScreenInfo from '@/src/components/EditScreenInfo';
 import { Text, View } from '@/src/components/Themed';
-import products from '@/assets/data/products';
-import { Product } from '../types';
+import { Destination } from '../types';
 import { Link, useSegments } from 'expo-router';
+import destinations from '@/assets/data/destiantions';
 
-export const DefaultImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png' 
+export const DefaultImage = 'https://previews.123rf.com/images/koblizeek/koblizeek2208/koblizeek220800254/190563481-no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment-placeholder.jpg' 
 
 type DestinationListItemProps = {
-    product: Product;
+    destination: Destination;
 }
 
 
-const DestinationListItem = ({ product }: DestinationListItemProps) => {
+const DestinationListItem = ({ destination }: DestinationListItemProps) => {
   const segments = useSegments();
   console.log(segments);
   
   return (
-  <Link href={(`${segments[0]}/destination/${product.id}`)} asChild>
+  <Link href={(`${segments[0]}/destination/${destination.id}`)} asChild>
     <Pressable style={styles.container}>
       <Image 
         style={styles.image} 
-        source={{ uri: product.image || DefaultImage }} 
+        source={{ uri: DefaultImage }} 
         resizeMode='contain'
         />
 
-      <Text style={styles.title}> {product.name} </Text>
-      <Text style={styles.price}> ${product.price} </Text>
+      <Text style={styles.title}> {destination.name} </Text>
+      <Text style={styles.contry}> {destination.country} </Text>
     </Pressable>
   </Link> 
   );
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
     },
-    price: {
+    contry: {
       fontSize: 14,
       fontWeight: 'normal',
       color: 'blue'
