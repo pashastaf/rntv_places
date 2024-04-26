@@ -4,15 +4,19 @@ import { View, Text , Image, StyleSheet, Pressable} from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { DefaultImage } from '@/src/components/DestinationListItem';
 import destinations from '@/assets/data/destiantions';
+import { useDestination } from '@/src/api/destinations';
+import { isLoaded } from 'expo-font';
 
 const sizes = ['S','M','L','XL']
 
 const DestinationDetailScreen = () => {
-  const { id } = useLocalSearchParams();
+  const { id: idSting } = useLocalSearchParams();
+  const id = parseFloat(typeof idSting === 'string' ? idSting : idSting[0])
+
+  const {data: destination, error, isLoading} = useDestination(id);
 
   const [selectedSize, setSelectedSize] = useState('M');
 
-  const destination = destinations.find((p) => p.id.toString() === id);
 
   if (!destination) {
     return <Text> destination not found</Text>
@@ -20,7 +24,7 @@ const DestinationDetailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: destination.name }} />
+      <Stack.Screen options={{ title: destination.title }} />
       <Image 
         style={styles.image} 
         source={{ uri: DefaultImage }} 

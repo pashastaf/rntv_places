@@ -26,7 +26,7 @@ const DestinationListItem = ({ destination }: DestinationListItemProps) => {
         resizeMode='contain'
         />
 
-      <Text style={styles.title}> {destination.name} </Text>
+      <Text style={styles.title}> {destination.title} </Text>
       <Text style={styles.contry}> {destination.country} </Text>
     </Pressable>
   </Link> 

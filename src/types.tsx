@@ -1,7 +1,8 @@
 export type Destination = {
     id: number;
-    name: string;
+    title: string;
     country: string;
+    is_deleted: boolean;
   };
   
   export type PizzaSize = 'S' | 'M' | 'L' | 'XL';

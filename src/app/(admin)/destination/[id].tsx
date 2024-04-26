@@ -2,23 +2,24 @@ import React from 'react';
 import { useState } from 'react';
 import { View, Text , Image, StyleSheet, Pressable} from 'react-native';
 import { useLocalSearchParams, Stack, Link } from 'expo-router';
-import products from '@/assets/data/products';
-import destinations from '@/assets/data/destiantions';
 import { DefaultImage } from '@/src/components/DestinationListItem';
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/src/constants/Colors';
+import { useDestination } from '@/src/api/destinations';
 
 const sizes = ['S','M','L','XL']
 
 const DestinationDetailScreen = () => {
-  const { id } = useLocalSearchParams();
+  const { id: idSting } = useLocalSearchParams();
+  const id = parseFloat(typeof idSting === 'string' ? idSting : idSting[0])
+
+  const {data: destination, error, isLoading} = useDestination(id);
 
   const [selectedSize, setSelectedSize] = useState('M');
 
-  const destination = destinations.find((d) => d.id.toString() === id);
 
   if (!destination) {
-    return <Text> Product not found</Text>
+    return <Text> destination not found</Text>
   }
 
   return (
@@ -44,7 +45,7 @@ const DestinationDetailScreen = () => {
                 ),
             }}/>   
             
-      <Stack.Screen options={{ title: destination.name }} />
+      <Stack.Screen options={{ title: destination.title }} />
       <Image 
         style={styles.image} 
         source={{ uri:DefaultImage }} 

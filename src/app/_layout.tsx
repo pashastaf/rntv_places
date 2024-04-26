@@ -6,8 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/src/components/useColorScheme';
-import { Provider } from 'react-redux';
-import { store } from '../lib/store';
+import QueryProvider from '../providers/QueryProvider';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -50,15 +49,15 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <Provider store={store}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <QueryProvider>
       <Stack>
         <Stack.Screen name="(admin)" options={{ headerShown: false }} />
         <Stack.Screen name="(user)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
+    </QueryProvider>
     </ThemeProvider>
-    </Provider>
   );
 }

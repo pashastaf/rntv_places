@@ -1,29 +1,48 @@
 import { View, Text, StyleSheet, TextInput, Image, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@/src/components/Button'
 import { DefaultImage } from '@/src/components/DestinationListItem';
 import Colors from '@/src/constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useDeleteDestination, useDestination, useInsertDestination, useUpdateDestination } from '@/src/api/destinations';
 
 const CreateDestinationScreen = () => {
 
-    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
     const [country, setCountry] = useState('');
     const [errors, setErrors] = useState('');
     const [image, setImage] = useState<string | null>(null);
 
-    const { id } = useLocalSearchParams();
-    const isUpdating = !!id;
+    const { id: idString } = useLocalSearchParams();
+    const id = parseFloat(
+      typeof idString === 'string' ? idString : idString?.[0]
+    );
+    const isUpdating = !!idString;
+
+    const {mutate: insertDestination} = useInsertDestination();
+    const {mutate: updateDestination} = useUpdateDestination();
+    const {data: updatingDestination} = useDestination(id);
+    const {mutate: deleteDestination} = useDeleteDestination();
+
+
+    useEffect(() => {
+      if(updatingDestination) {
+        setTitle(updatingDestination.title);
+        setCountry(updatingDestination.country);
+      }
+    }, [updatingDestination])
+
+    const router = useRouter();
 
     const resetFields = () => {
-      setName('');
+      setTitle('');
       setCountry('');
     };
 
     const validateInput = () => {
       setErrors('');
-      if (!name) {
+      if (!title) {
         setErrors('Name is required');
         return false;
       }
@@ -36,20 +55,62 @@ const CreateDestinationScreen = () => {
 
     const onSubmit = () => {
       if (isUpdating) {
-
+        onUpdate();
       } else {
         onCreate();
       }
     };
 
-    const onCreate = () => {
+    const onCreate = async () => {
       if (!validateInput()) {
         return;
-      };
-    
-      console.warn('Creating product',name ,country);
+      }
+      insertDestination(
+        { title, country },
+        {
+          onSuccess: () => {
+            resetFields();
+            router.back();
+          },
+        }
+      );
+    };
 
-      resetFields();
+    const onUpdate = async () => {
+      if (!validateInput()) {
+        return;
+      }
+      updateDestination(
+        { id, title, country },
+        {
+          onSuccess: () => {
+            resetFields();
+            router.back();
+          },
+        }
+      );
+    };
+
+    const onDelete = () => {
+      deleteDestination(id, {
+        onSuccess: () => {
+          resetFields();
+          router.replace('/(admin)');
+        },
+      });
+    };
+
+    const confirmDelete = () => {
+      Alert.alert('Confirm', 'Are you sure you want to delete this product', [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: onDelete,
+        },
+      ]);
     };
 
     const pickImage = async () => {
@@ -67,23 +128,6 @@ const CreateDestinationScreen = () => {
     }
   };
 
-  const onDelete = () => {
-    console.warn('DELETE??');
-  };
-
-  const confirmDelete = () => {
-    Alert.alert("Confirm", "Are you sure?", [
-      { 
-        text: "Cancel",
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: onDelete
-      }
-    ]);
-  };
-
   return (
     <View style={styles.contrainer}>
       <Stack.Screen options={{ title: isUpdating ? 'Update Destination' : 'Create Destination' }} />
@@ -91,12 +135,12 @@ const CreateDestinationScreen = () => {
       <Text style={styles.textButton} onPress={pickImage}>
         Select Image
       </Text>
-      <Text style={styles.title}>Name</Text>
+      <Text style={styles.title}>Title</Text>
       <TextInput 
         placeholder='park' 
         style={styles.input} 
-        value={name}
-        onChangeText={setName}
+        value={title}
+        onChangeText={setTitle}
         />
       <Text style={styles.title}>Country</Text>
       <TextInput 
