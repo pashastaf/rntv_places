@@ -137,14 +137,14 @@ const CreateDestinationScreen = () => {
       </Text>
       <Text style={styles.title}>Title</Text>
       <TextInput 
-        placeholder='park' 
+        placeholder='Destination name' 
         style={styles.input} 
         value={title}
         onChangeText={setTitle}
         />
       <Text style={styles.title}>Country</Text>
       <TextInput 
-        placeholder='Moldova'
+        placeholder='Country name'
         style={styles.input}
         value={country}
         onChangeText={setCountry}
